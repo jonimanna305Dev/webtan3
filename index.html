@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebTen | Home</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm">
+        <nav class="mx-auto container px-4 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+
+                <!-- Logo -->
+                <a href="index.html" class="text-3xl font-extrabold tracking-tight text-slate-900">
+                    <span class="text-cyan-600">Web</span>Ten
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden items-center gap-8 lg:flex">
+
+                    <a href="index.html" class="font-semibold text-cyan-600">
+                        Home
+                    </a>
+
+                    <a href="about.html" class="font-medium text-slate-700 transition hover:text-cyan-600">
+                        About
+                    </a>
+
+                    <!-- Pages Dropdown -->
+                    <div class="group relative">
+                        <button type="button"
+                            class="flex items-center gap-2 py-7 font-medium text-slate-700 transition hover:text-cyan-600">
+                            Pages
+                            <svg class="h-4 w-4 transition group-hover:rotate-180" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+
+                        <div
+                            class="invisible absolute left-0 top-full w-52 translate-y-2 rounded-xl border border-slate-100 bg-white p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                            <a href="team.html"
+                                class="block rounded-lg px-4 py-3 text-sm text-slate-700 hover:bg-cyan-50 hover:text-cyan-600">
+                                Our Team
+                            </a>
+                            <a href="services.html"
+                                class="block rounded-lg px-4 py-3 text-sm text-slate-700 hover:bg-cyan-50 hover:text-cyan-600">
+                                Services
+                            </a>
+                            <a href="partner.html"
+                                class="block rounded-lg px-4 py-3 text-sm text-slate-700 hover:bg-cyan-50 hover:text-cyan-600">
+                                Partner
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- News Dropdown -->
+                    <div class="group relative">
+                        <button type="button"
+                            class="flex items-center gap-2 py-7 font-medium text-slate-700 transition hover:text-cyan-600">
+                            News
+                            <svg class="h-4 w-4 transition group-hover:rotate-180" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+
+                        <div
+                            class="invisible absolute left-0 top-full w-52 translate-y-2 rounded-xl border border-slate-100 bg-white p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                            <a href="blog.html"
+                                class="block rounded-lg px-4 py-3 text-sm text-slate-700 hover:bg-cyan-50 hover:text-cyan-600">
+                                Our Blog
+                            </a>
+                            <a href="event.html"
+                                class="block rounded-lg px-4 py-3 text-sm text-slate-700 hover:bg-cyan-50 hover:text-cyan-600">
+                                Event
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="contact.html" class="font-medium text-slate-700 transition hover:text-cyan-600">
+                        Contact
+                    </a>
+                </div>
+
+                <!-- Desktop CTA -->
+                <a href="contact.html"
+                    class="hidden rounded-lg bg-cyan-600 px-6 py-3 font-semibold text-white transition hover:bg-cyan-700 lg:inline-flex">
+                    Get In Touch
+                </a>
+
+                <!-- Mobile Toggle -->
+                <button id="menuBtn" type="button" aria-label="Toggle navigation" aria-controls="mobileMenu"
+                    aria-expanded="false" class="rounded-lg p-2 text-slate-800 hover:bg-slate-100 lg:hidden">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu" class="hidden border-t border-slate-100 py-4 lg:hidden">
+                <div class="flex flex-col gap-1">
+
+                    <a href="index.html" class="rounded-lg bg-cyan-50 px-4 py-3 font-semibold text-cyan-600">Home</a>
+
+                    <a href="about.html" class="rounded-lg px-4 py-3 text-slate-700 hover:bg-slate-100">About</a>
+
+                    <!-- Mobile Pages -->
+                    <button type="button" data-dropdown="mobilePages" aria-expanded="false"
+                        class="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-slate-700 hover:bg-slate-100">
+                        Pages
+                        <span>⌄</span>
+                    </button>
+
+                    <div id="mobilePages" class="hidden space-y-1 pl-5">
+                        <a href="team.html" class="block rounded-lg px-4 py-2 text-slate-600 hover:bg-cyan-50">Our
+                            Team</a>
+                        <a href="services.html"
+                            class="block rounded-lg px-4 py-2 text-slate-600 hover:bg-cyan-50">Services</a>
+                        <a href="partner.html"
+                            class="block rounded-lg px-4 py-2 text-slate-600 hover:bg-cyan-50">Partner</a>
+                    </div>
+
+                    <!-- Mobile News -->
+                    <button type="button" data-dropdown="mobileNews" aria-expanded="false"
+                        class="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-slate-700 hover:bg-slate-100">
+                        News
+                        <span>⌄</span>
+                    </button>
+
+                    <div id="mobileNews" class="hidden space-y-1 pl-5">
+                        <a href="blog.html" class="block rounded-lg px-4 py-2 text-slate-600 hover:bg-cyan-50">Our
+                            Blog</a>
+                        <a href="event.html"
+                            class="block rounded-lg px-4 py-2 text-slate-600 hover:bg-cyan-50">Event</a>
+                    </div>
+
+                    <a href="contact.html" class="rounded-lg px-4 py-3 text-slate-700 hover:bg-slate-100">Contact</a>
+
+                    <a href="contact.html"
+                        class="mt-3 rounded-lg bg-cyan-600 px-5 py-3 text-center font-semibold text-white hover:bg-cyan-700">
+                        Get In Touch
+                    </a>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Carousel Section -->
+    <section id="heroCarousel" class="relative overflow-hidden bg-slate-950 text-white"
+        aria-label="WebTen featured solutions">
+
+        <!-- Slides Container -->
+        <div class="relative">
+
+            <!-- Slide 1 -->
+            <div data-slide
+                class="relative flex min-h-[560px] items-center overflow-hidden py-20 sm:min-h-[620px] lg:min-h-[680px]">
+
+                <!-- Background Image -->
+                <div class="absolute inset-0">
+                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1920&q=85"
+                        alt="Modern creative workspace" class="h-full w-full object-cover">
+                    <div class="absolute inset-0 bg-slate-950/80"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent"></div>
+                </div>
+
+                <!-- Content -->
+                <div class="relative z-10 mx-auto w-full container px-6 sm:px-8 lg:px-12">
+
+                    <div class="max-w-3xl">
+
+                        <!-- Small Heading -->
+                        <span
+                            class="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-cyan-300 sm:text-sm">
+                            Welcome to WebTen
+                        </span>
+
+                        <!-- Title -->
+                        <h1 class="mb-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+                            Transforming Ideas Into
+                            <span class="text-cyan-400">
+                                Powerful Digital Experiences
+                            </span>
+                        </h1>
+
+                        <!-- Description -->
+                        <p class="mb-10 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+                            We build modern websites, scalable applications, and
+                            innovative digital solutions that help businesses grow,
+                            connect with customers, and succeed in a competitive world.
+                        </p>
+
+                        <!-- Buttons -->
+                        <div class="flex flex-wrap items-center gap-4">
+
+                            <a href="services.html"
+                                class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-cyan-900/30 transition duration-300 hover:-translate-y-1 hover:bg-cyan-500">
+                                Explore Services
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+
+                            <a href="contact.html"
+                                class="inline-flex items-center justify-center rounded-lg border border-white/40 bg-white/10 px-7 py-4 text-sm font-bold text-white backdrop-blur-sm transition duration-300 hover:border-cyan-400 hover:bg-white/20">
+                                Contact Us
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div data-slide
+                class="relative hidden min-h-[560px] items-center overflow-hidden py-20 sm:min-h-[620px] lg:min-h-[680px]">
+
+                <!-- Background Image -->
+                <div class="absolute inset-0">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=85"
+                        alt="Software development workspace" class="h-full w-full object-cover" loading="lazy">
+                    <div class="absolute inset-0 bg-slate-950/80"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent"></div>
+                </div>
+
+                <!-- Content -->
+                <div class="relative z-10 mx-auto w-full container px-6 sm:px-8 lg:px-12">
+
+                    <div class="max-w-3xl">
+
+                        <!-- Small Heading -->
+                        <span
+                            class="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-cyan-300 sm:text-sm">
+                            Innovative IT Solutions
+                        </span>
+
+                        <!-- Title -->
+                        <h2 class="mb-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+                            Your Vision, Our Expertise,
+                            <span class="text-cyan-400">
+                                Endless Possibilities
+                            </span>
+                        </h2>
+
+                        <!-- Description -->
+                        <p class="mb-10 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+                            From creative design to powerful web development,
+                            our team turns your business challenges into reliable,
+                            user-friendly, and future-ready digital solutions.
+                        </p>
+
+                        <!-- Buttons -->
+                        <div class="flex flex-wrap items-center gap-4">
+
+                            <a href="contact.html"
+                                class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-cyan-900/30 transition duration-300 hover:-translate-y-1 hover:bg-cyan-500">
+                                Get Started
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+
+                            <a href="about.html"
+                                class="inline-flex items-center justify-center rounded-lg border border-white/40 bg-white/10 px-7 py-4 text-sm font-bold text-white backdrop-blur-sm transition duration-300 hover:border-cyan-400 hover:bg-white/20">
+                                Learn More
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Carousel Navigation Buttons - Bottom Right -->
+        <div
+            class="absolute bottom-6 right-6 z-20 flex items-center gap-3 sm:bottom-8 sm:right-10 lg:bottom-10 lg:right-16">
+
+            <!-- Previous Button -->
+            <button id="heroPrev" type="button" aria-label="Previous slide"
+                class="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:border-cyan-500 hover:bg-cyan-600 sm:h-12 sm:w-12">
+
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18-6-6 6-6" />
+                </svg>
+            </button>
+
+            <!-- Next Button -->
+            <button id="heroNext" type="button" aria-label="Next slide"
+                class="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:border-cyan-500 hover:bg-cyan-600 sm:h-12 sm:w-12">
+
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18 6-6-6-6" />
+                </svg>
+            </button>
+
+        </div>
+
+
+        <!-- Slide Indicators -->
+        <div class="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
+
+            <button type="button" data-indicator="0" aria-label="Go to slide 1" aria-current="true"
+                class="h-2.5 w-10 rounded-full bg-cyan-400 transition-all duration-300">
+            </button>
+
+            <button type="button" data-indicator="1" aria-label="Go to slide 2" aria-current="false"
+                class="h-2.5 w-2.5 rounded-full bg-white/50 transition-all duration-300">
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+        <div class="mx-auto container px-4 sm:px-6 lg:px-8">
+
+            <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+
+                <!-- Left Side: Content -->
+                <div class="order-2 lg:order-1">
+
+                    <!-- Section Label -->
+                    <div class="mb-5 flex items-center gap-3">
+                        <span class="h-0.5 w-10 bg-cyan-600"></span>
+                        <span class="text-sm font-bold uppercase tracking-widest text-cyan-600">
+                            About WebTen
+                        </span>
+                    </div>
+
+                    <!-- Section Heading -->
+                    <h2
+                        class="mb-6 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+                        We Build Digital Solutions
+                        <span class="text-cyan-600">
+                            That Inspire Growth
+                        </span>
+                    </h2>
+
+                    <!-- Description -->
+                    <p class="mb-5 text-base leading-8 text-slate-600">
+                        At <strong class="text-slate-900">WebTen</strong>,
+                        we believe every great idea deserves an exceptional
+                        digital experience. We are passionate about turning
+                        creative concepts into modern, functional, and
+                        user-friendly digital solutions.
+                    </p>
+
+                    <p class="mb-8 text-base leading-8 text-slate-600">
+                        From website development and intuitive UI/UX design
+                        to scalable software applications, our goal is to
+                        help businesses strengthen their online presence,
+                        streamline operations, and achieve sustainable growth.
+                    </p>
+
+                    <!-- Features -->
+                    <div class="mb-9 grid grid-cols-1 gap-5 sm:grid-cols-2">
+
+                        <!-- Feature 1 -->
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m5-1V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900">
+                                    Quality Solutions
+                                </h3>
+                                <p class="mt-1 text-sm leading-6 text-slate-500">
+                                    Reliable and modern digital experiences.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900">
+                                    Timely Delivery
+                                </h3>
+                                <p class="mt-1 text-sm leading-6 text-slate-500">
+                                    Clear planning and efficient execution.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a4 4 0 00-5-4h-1M9 20H2v-2a4 4 0 014-4h1m9-7a4 4 0 11-8 0 4 4 0 018 0zM12 14a4 4 0 014 4v2H8v-2a4 4 0 014-4z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900">
+                                    Creative Teamwork
+                                </h3>
+                                <p class="mt-1 text-sm leading-6 text-slate-500">
+                                    Collaboration that brings ideas to life.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 4 -->
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900">
+                                    Innovative Thinking
+                                </h3>
+                                <p class="mt-1 text-sm leading-6 text-slate-500">
+                                    Smart ideas for evolving business needs.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex flex-wrap items-center gap-4">
+                        <a href="about.html"
+                            class="inline-flex items-center justify-center gap-3 rounded-lg bg-cyan-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-cyan-600/20 transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-700">
+                            More About Us
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+
+                        <a href="contact.html"
+                            class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-7 py-4 text-sm font-bold text-slate-800 transition-all duration-300 hover:border-cyan-600 hover:text-cyan-600">
+                            Contact Our Team
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Right Side: Anime Image -->
+                <div class="order-1 lg:order-2">
+                    <div class="relative mx-auto max-w-lg lg:max-w-none">
+
+                        <!-- Decorative Background -->
+                        <div class="absolute -right-4 -top-4 h-32 w-32 rounded-3xl bg-cyan-100 sm:-right-6 sm:-top-6">
+                        </div>
+                        <div
+                            class="absolute -bottom-4 -left-4 h-32 w-32 rounded-3xl bg-sky-100 sm:-bottom-6 sm:-left-6">
+                        </div>
+
+                        <!-- Main Image -->
+                        <div
+                            class="relative overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 shadow-2xl shadow-slate-200/70">
+                            <img src="img/Collaborative Anime Tech Team.png"
+                                alt="Anime illustration of a creative software development team collaborating"
+                                class="h-[380px] w-full object-cover object-center sm:h-[480px] lg:h-[560px]"
+                                loading="lazy">
+                        </div>
+
+                        <!-- Floating Card -->
+                        <div
+                            class="absolute bottom-5 left-3 right-3 rounded-2xl border border-white/80 bg-white/95 p-4 shadow-xl backdrop-blur-md sm:bottom-8 sm:left-6 sm:right-auto sm:max-w-xs sm:p-5">
+
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan-100 text-cyan-600">
+                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12l2 2 4-4m7-1a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">
+                                        Built With Passion
+                                    </h3>
+                                    <p class="text-sm text-slate-500">
+                                        Designed for your success
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Services Section -->
+    <section id="services" class="bg-slate-50 py-16 sm:py-20 lg:py-24">
+
+        <div class="mx-auto container px-4 sm:px-6 lg:px-8">
+
+            <!-- Section Header -->
+            <div class="mx-auto mb-12 max-w-3xl text-center lg:mb-16">
+
+                <div class="mb-4 flex items-center justify-center gap-3">
+                    <span class="h-0.5 w-8 bg-cyan-600"></span>
+
+                    <span class="text-sm font-bold uppercase tracking-widest text-cyan-600">
+                        What We Offer
+                    </span>
+
+                    <span class="h-0.5 w-8 bg-cyan-600"></span>
+                </div>
+
+                <h2 class="mb-5 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+                    Explore Our
+                    <span class="text-cyan-600">Professional Services</span>
+                </h2>
+
+                <p class="text-base leading-8 text-slate-600 sm:text-lg">
+                    From creative design to powerful technology, we deliver
+                    innovative digital solutions that help businesses grow,
+                    improve efficiency, and achieve their goals.
+                </p>
+            </div>
+
+            <!-- Services Grid -->
+            <!-- Mobile: 1 | Tablet: 2 | Desktop: 4 -->
+            <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-4">
+
+                <!-- Service Card 1 -->
+                <article
+                    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-200 hover:shadow-xl">
+
+                    <!-- Image -->
+                    <div class="relative overflow-hidden">
+                        <img src="img/Web Development.png" alt="Web development workspace"
+                            class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy">
+
+                        <!-- Card Number -->
+                        <span
+                            class="absolute bottom-4 left-4 rounded-lg bg-cyan-600 px-3 py-1.5 text-xs font-bold text-white">
+                            01
+                        </span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex flex-1 flex-col p-6">
+
+                        <h3 class="mb-3 text-xl font-bold text-slate-900 transition-colors group-hover:text-cyan-600">
+                            Web Development
+                        </h3>
+
+                        <p class="mb-6 flex-1 text-sm leading-7 text-slate-600">
+                            We create modern, responsive, and high-performance
+                            websites that deliver seamless experiences across
+                            all devices and help your business stand out.
+                        </p>
+
+                        <a href="services.html"
+                            class="inline-flex items-center gap-2 text-sm font-bold text-cyan-600 transition-all hover:gap-3 hover:text-cyan-700">
+                            Learn More
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+
+                    </div>
+                </article>
+
+                <!-- Service Card 2 -->
+                <article
+                    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-200 hover:shadow-xl">
+
+                    <!-- Image -->
+                    <div class="relative overflow-hidden">
+                        <img src="img/UIUX Design.png" alt="UI UX design workspace"
+                            class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy">
+
+                        <span
+                            class="absolute bottom-4 left-4 rounded-lg bg-cyan-600 px-3 py-1.5 text-xs font-bold text-white">
+                            02
+                        </span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex flex-1 flex-col p-6">
+
+                        <h3 class="mb-3 text-xl font-bold text-slate-900 transition-colors group-hover:text-cyan-600">
+                            UI/UX Design
+                        </h3>
+
+                        <p class="mb-6 flex-1 text-sm leading-7 text-slate-600">
+                            We design visually appealing, intuitive, and
+                            user-friendly interfaces that enhance engagement,
+                            improve usability, and create memorable experiences.
+                        </p>
+
+                        <a href="services.html"
+                            class="inline-flex items-center gap-2 text-sm font-bold text-cyan-600 transition-all hover:gap-3 hover:text-cyan-700">
+                            Learn More
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+
+                    </div>
+                </article>
+
+                <!-- Service Card 3 -->
+                <article
+                    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-200 hover:shadow-xl">
+
+                    <!-- Image -->
+                    <div class="relative overflow-hidden">
+                        <img src="img/Software Solutions.png" alt="Software development team"
+                            class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy">
+
+                        <span
+                            class="absolute bottom-4 left-4 rounded-lg bg-cyan-600 px-3 py-1.5 text-xs font-bold text-white">
+                            03
+                        </span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex flex-1 flex-col p-6">
+
+                        <h3 class="mb-3 text-xl font-bold text-slate-900 transition-colors group-hover:text-cyan-600">
+                            Software Solutions
+                        </h3>
+
+                        <p class="mb-6 flex-1 text-sm leading-7 text-slate-600">
+                            We develop scalable and reliable software
+                            applications tailored to business needs,
+                            helping teams automate workflows and improve
+                            operational efficiency.
+                        </p>
+
+                        <a href="services.html"
+                            class="inline-flex items-center gap-2 text-sm font-bold text-cyan-600 transition-all hover:gap-3 hover:text-cyan-700">
+                            Learn More
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+
+                    </div>
+                </article>
+
+                <!-- Service Card 4 -->
+                <article
+                    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-200 hover:shadow-xl">
+
+                    <!-- Image -->
+                    <div class="relative overflow-hidden">
+                        <img src="img/Digital Solutions.png" alt="Digital business analytics"
+                            class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy">
+
+                        <span
+                            class="absolute bottom-4 left-4 rounded-lg bg-cyan-600 px-3 py-1.5 text-xs font-bold text-white">
+                            04
+                        </span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex flex-1 flex-col p-6">
+
+                        <h3 class="mb-3 text-xl font-bold text-slate-900 transition-colors group-hover:text-cyan-600">
+                            Digital Solutions
+                        </h3>
+
+                        <p class="mb-6 flex-1 text-sm leading-7 text-slate-600">
+                            We provide smart digital solutions that strengthen
+                            your online presence, optimize business processes,
+                            and unlock new opportunities for growth.
+                        </p>
+
+                        <a href="services.html"
+                            class="inline-flex items-center gap-2 text-sm font-bold text-cyan-600 transition-all hover:gap-3 hover:text-cyan-700">
+                            Learn More
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Bottom Button -->
+            <div class="mt-12 text-center">
+                <a href="services.html"
+                    class="inline-flex items-center justify-center gap-3 rounded-lg bg-cyan-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-cyan-600/20 transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-700">
+
+                    View All Services
+
+                    <span aria-hidden="true">&rarr;</span>
+
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="bg-white py-16 sm:py-20 lg:py-24">
+        <div class="mx-auto container px-4 sm:px-6 lg:px-8">
+
+            <!-- Section Heading -->
+            <div class="mx-auto mb-12 max-w-3xl text-center">
+
+                <div class="mb-4 flex items-center justify-center gap-3">
+                    <span class="h-0.5 w-8 bg-cyan-600"></span>
+                    <span class="text-sm font-bold uppercase tracking-widest text-cyan-600">
+                        What's Happening
+                    </span>
+                    <span class="h-0.5 w-8 bg-cyan-600"></span>
+                </div>
+
+                <h2 class="mb-5 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+                    Discover Our
+                    <span class="text-cyan-600">Latest Events</span>
+                </h2>
+
+                <p class="text-base leading-8 text-slate-600 sm:text-lg">
+                    Stay connected with our community through inspiring
+                    workshops, technology meetups, and creative events.
+                    Explore opportunities to learn, collaborate, and grow.
+                </p>
+            </div>
+
+            <!-- Events Grid -->
+            <!-- Mobile: 1 | Tablet: 2 | Desktop: 3 -->
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+                <!-- Event Card 01 -->
+                <article
+                    class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+
+                    <!-- Event Image -->
+                    <div class="relative overflow-hidden">
+                        <img src="img/webdevelopment-workshop.png" alt="Anime-style web development workshop"
+                            class="h-60 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy">
+
+                        <!-- Event Date -->
+                        <div class="absolute left-5 top-5 rounded-xl bg-white px-4 py-3 text-center shadow-lg">
+                            <span class="block text-2xl font-extrabold leading-none text-cyan-600">
+                                15
+                            </span>
+                            <span class="mt-1 block text-xs font-bold uppercase tracking-wider text-slate-600">
+                                Dec 2026
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Event Details -->
+                    <div class="flex flex-1 flex-col p-6">
+
+                        <span class="mb-3 text-xs font-bold uppercase tracking-wider text-cyan-600">
+                            Technology Workshop
+                        </span>
+
+                        <h3
+                            class="mb-3 text-xl font-bold leading-snug text-slate-900 transition-colors group-hover:text-cyan-600">
+                            Modern Web Development Workshop
+                        </h3>
+
+                        <p class="mb-6 flex-1 text-sm leading-7 text-slate-600">
+                            Explore modern web technologies, responsive
+                            development, and practical techniques for
+                            building fast, interactive, and user-friendly
+                            websites.
+                        </p>
+
+                        <div class="border-t border-slate-100 pt-5">
+                            <a href="event.html"
+                                class="inline-flex items-center gap-2 text-sm font-bold text-cyan-600 transition-all hover:gap-3 hover:text-cyan-700">
+                                View Event Details
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </article>
+
+                <!-- Event Card 02 -->
+                <article
+                    class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+
+                    <!-- Event Image -->
+                    <div class="relative overflow-hidden">
+                        <img src="img/digitalinnovation-meetup.png" alt="Anime-style digital innovation meetup"
+                            class="h-60 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy">
+
+                        <!-- Event Date -->
+                        <div class="absolute left-5 top-5 rounded-xl bg-white px-4 py-3 text-center shadow-lg">
+                            <span class="block text-2xl font-extrabold leading-none text-cyan-600">
+                                22
+                            </span>
+                            <span class="mt-1 block text-xs font-bold uppercase tracking-wider text-slate-600">
+                                Dec 2026
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Event Details -->
+                    <div class="flex flex-1 flex-col p-6">
+
+                        <span class="mb-3 text-xs font-bold uppercase tracking-wider text-cyan-600">
+                            Networking Event
+                        </span>
+
+                        <h3
+                            class="mb-3 text-xl font-bold leading-snug text-slate-900 transition-colors group-hover:text-cyan-600">
+                            Digital Innovation & Tech Meetup
+                        </h3>
+
+                        <p class="mb-6 flex-1 text-sm leading-7 text-slate-600">
+                            Connect with technology enthusiasts, exchange
+                            innovative ideas, and discover how emerging
+                            digital solutions are transforming modern
+                            businesses.
+                        </p>
+
+                        <div class="border-t border-slate-100 pt-5">
+                            <a href="event.html"
+                                class="inline-flex items-center gap-2 text-sm font-bold text-cyan-600 transition-all hover:gap-3 hover:text-cyan-700">
+                                View Event Details
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </article>
+
+                <!-- Event Card 03 -->
+                <article
+                    class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+
+                    <!-- Event Image -->
+                    <div class="relative overflow-hidden">
+                        <img src="img/uiuxdesign-workshop.png" alt="Anime-style UI UX design workshop"
+                            class="h-60 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy">
+
+                        <!-- Event Date -->
+                        <div class="absolute left-5 top-5 rounded-xl bg-white px-4 py-3 text-center shadow-lg">
+                            <span class="block text-2xl font-extrabold leading-none text-cyan-600">
+                                28
+                            </span>
+                            <span class="mt-1 block text-xs font-bold uppercase tracking-wider text-slate-600">
+                                Dec 2026
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Event Details -->
+                    <div class="flex flex-1 flex-col p-6">
+
+                        <span class="mb-3 text-xs font-bold uppercase tracking-wider text-cyan-600">
+                            Creative Workshop
+                        </span>
+
+                        <h3
+                            class="mb-3 text-xl font-bold leading-snug text-slate-900 transition-colors group-hover:text-cyan-600">
+                            UI/UX Design & Creative Thinking
+                        </h3>
+
+                        <p class="mb-6 flex-1 text-sm leading-7 text-slate-600">
+                            Discover user-centered design principles,
+                            explore interface design techniques, and
+                            learn how to create engaging digital
+                            experiences.
+                        </p>
+
+                        <div class="border-t border-slate-100 pt-5">
+                            <a href="event.html"
+                                class="inline-flex items-center gap-2 text-sm font-bold text-cyan-600 transition-all hover:gap-3 hover:text-cyan-700">
+                                View Event Details
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- View All Events Button -->
+            <div class="mt-12 text-center">
+                <a href="event.html"
+                    class="inline-flex items-center justify-center gap-3 rounded-lg bg-cyan-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-cyan-600/20 transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-700">
+
+                    Explore All Events
+                    <span aria-hidden="true">&rarr;</span>
+
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Our Partners Section -->
+    <section id="partners" class="bg-slate-50 py-16 sm:py-20 lg:py-24">
+
+        <div class="mx-auto container px-4 sm:px-6 lg:px-8">
+
+            <!-- Section Header -->
+            <div class="mx-auto mb-12 max-w-3xl text-center">
+
+                <div class="mb-4 flex items-center justify-center gap-3">
+                    <span class="h-0.5 w-8 bg-cyan-600"></span>
+
+                    <span class="text-sm font-bold uppercase tracking-widest text-cyan-600">
+                        Our Partners
+                    </span>
+
+                    <span class="h-0.5 w-8 bg-cyan-600"></span>
+                </div>
+
+                <!-- Title -->
+                <h2 class="mb-5 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+                    Building Stronger Connections
+                    <span class="text-cyan-600">Together</span>
+                </h2>
+
+                <!-- Description -->
+                <p class="text-base leading-8 text-slate-600 sm:text-lg">
+                    We believe that great achievements are built through
+                    meaningful collaboration. Together with our partners,
+                    we explore new possibilities, embrace innovation,
+                    and create lasting value.
+                </p>
+            </div>
+
+            <!-- Partners Grid -->
+            <!-- Mobile: 2 | Tablet: 3 | Desktop: 6 -->
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-6">
+
+                <!-- Partner 01 -->
+                <div
+                    class="group flex h-32 items-center justify-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-xl">
+                    <img src="img/Google Logo on White Background-1.png" alt="Google"
+                        class="max-h-14 w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy">
+                </div>
+
+                <!-- Partner 02 -->
+                <div
+                    class="group flex h-32 items-center justify-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-xl">
+                    <img src="img/Microsoft Four-Color Window Logo-2.png" alt="Microsoft"
+                        class="max-h-14 w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy">
+                </div>
+
+                <!-- Partner 03 -->
+                <div
+                    class="group flex h-32 items-center justify-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-xl">
+                    <img src="img/GitHub Octocat Logo Mark-3.png" alt="GitHub"
+                        class="max-h-14 w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy">
+                </div>
+
+                <!-- Partner 04 -->
+                <div
+                    class="group flex h-32 items-center justify-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-xl">
+                    <img src="img/AWS Logo with Orange Swoosh-4.png" alt="Amazon Web Services"
+                        class="max-h-14 w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy">
+                </div>
+
+                <!-- Partner 05 -->
+                <div
+                    class="group flex h-32 items-center justify-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-xl">
+                    <img src="img/Cloudflare Logo on White-5.png" alt="Cloudflare"
+                        class="max-h-14 w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy">
+                </div>
+
+                <!-- Partner 06 -->
+                <div
+                    class="group flex h-32 items-center justify-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-xl">
+                    <img src="img/Figma Logo on White Background-6.png" alt="Figma"
+                        class="max-h-14 w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy">
+                </div>
+
+            </div>
+
+            <!-- Bottom CTA -->
+            <div class="mt-12 text-center">
+
+                <p class="mb-6 text-base text-slate-600">
+                    Interested in exploring opportunities with WebTen?
+                </p>
+
+                <a href="contact.html"
+                    class="inline-flex items-center justify-center gap-3 rounded-lg bg-cyan-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-cyan-600/20 transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-700">
+
+                    Become a Partner
+
+                    <span aria-hidden="true">&rarr;</span>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="border-t border-slate-200 bg-slate-950 text-slate-300">
+
+        <div class="mx-auto container px-4 py-16 sm:px-6 lg:px-8">
+
+            <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="mb-6 text-lg font-bold text-white">
+                        Quick Links
+                    </h3>
+
+                    <ul class="space-y-3 text-sm">
+                        <li>
+                            <a href="index.html" class="transition hover:text-cyan-400">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="about.html" class="transition hover:text-cyan-400">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="team.html" class="transition hover:text-cyan-400">
+                                Our Team
+                            </a>
+                        </li>
+                        <li>
+                            <a href="partner.html" class="transition hover:text-cyan-400">
+                                Our Partners
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contact.html" class="transition hover:text-cyan-400">
+                                Contact Us
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Our Services -->
+                <div>
+                    <h3 class="mb-6 text-lg font-bold text-white">
+                        Our Services
+                    </h3>
+
+                    <ul class="space-y-3 text-sm">
+                        <li>
+                            <a href="services.html" class="transition hover:text-cyan-400">
+                                Web Development
+                            </a>
+                        </li>
+                        <li>
+                            <a href="services.html" class="transition hover:text-cyan-400">
+                                UI/UX Design
+                            </a>
+                        </li>
+                        <li>
+                            <a href="services.html" class="transition hover:text-cyan-400">
+                                Software Solutions
+                            </a>
+                        </li>
+                        <li>
+                            <a href="services.html" class="transition hover:text-cyan-400">
+                                Digital Solutions
+                            </a>
+                        </li>
+                        <li>
+                            <a href="services.html" class="transition hover:text-cyan-400">
+                                IT Consulting
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Explore -->
+                <div>
+                    <h3 class="mb-6 text-lg font-bold text-white">
+                        Explore
+                    </h3>
+
+                    <ul class="space-y-3 text-sm">
+                        <li>
+                            <a href="blog.html" class="transition hover:text-cyan-400">
+                                Our Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="event.html" class="transition hover:text-cyan-400">
+                                Events
+                            </a>
+                        </li>
+                        <li>
+                            <a href="services.html" class="transition hover:text-cyan-400">
+                                All Services
+                            </a>
+                        </li>
+                        <li>
+                            <a href="privacy.html" class="transition hover:text-cyan-400">
+                                Privacy Policy
+                            </a>
+                        </li>
+                        <li>
+                            <a href="terms.html" class="transition hover:text-cyan-400">
+                                Terms & Conditions
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <a href="index.html" class="mb-5 inline-block text-3xl font-extrabold tracking-tight text-white">
+                        <span class="text-cyan-400">Web</span>Ten
+                    </a>
+
+                    <h3 class="mb-3 text-lg font-bold text-white">
+                        Subscribe to Our Newsletter
+                    </h3>
+
+                    <p class="mb-6 text-sm leading-6 text-slate-400">
+                        Get the latest updates, insights, news, and
+                        exciting announcements delivered to your inbox.
+                    </p>
+
+                    <form id="newsletterForm" class="space-y-3">
+                        <label for="newsletterEmail" class="sr-only">
+                            Email address
+                        </label>
+
+                        <input id="newsletterEmail" name="email" type="email" placeholder="Enter your email address"
+                            autocomplete="email" required
+                            class="w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20">
+
+                        <button type="submit"
+                            class="w-full rounded-lg bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                            Subscribe Now
+                        </button>
+
+                        <p id="newsletterMessage" class="hidden text-sm text-amber-300" role="status"></p>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Bottom Footer -->
+            <div
+                class="mt-14 flex flex-col gap-6 border-t border-slate-800 pt-8 md:flex-row md:items-center md:justify-between">
+
+                <!-- Copyright -->
+                <p class="text-center text-sm text-slate-400 md:text-left">
+                    &copy; <span id="currentYear"></span>
+                    <a href="index.html" class="font-semibold text-white hover:text-cyan-400">
+                        WebTen
+                    </a>.
+                    All rights reserved.
+                </p>
+
+                <!-- Social Media -->
+                <div class="flex items-center justify-center gap-5">
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                        class="text-sm font-medium text-slate-400 transition hover:text-cyan-400">
+                        Facebook
+                    </a>
+
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                        class="text-sm font-medium text-slate-400 transition hover:text-cyan-400">
+                        LinkedIn
+                    </a>
+
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Instagram"
+                        class="text-sm font-medium text-slate-400 transition hover:text-cyan-400">
+                        Instagram
+                    </a>
+
+                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+                        class="text-sm font-medium text-slate-400 transition hover:text-cyan-400">
+                        GitHub
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+
+
+    <script>
+        document.getElementById('currentYear').textContent =
+            new Date().getFullYear();
+
+        document.getElementById('newsletterForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const message = document.getElementById('newsletterMessage');
+            message.textContent = 'Newsletter subscription is not connected yet.';
+            message.classList.remove('hidden');
+        });
+    </script>
+    <!-- JavaScript for mobile navigation -->
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        document.querySelectorAll('[data-dropdown]').forEach(button => {
+            button.addEventListener('click', () => {
+                const target = document.getElementById(button.dataset.dropdown);
+                const isOpen = !target.classList.toggle('hidden');
+                button.setAttribute('aria-expanded', String(isOpen));
+            });
+        });
+    </script>
+    <!-- Carousel JavaScript -->
+    <script>
+        (() => {
+            const carousel = document.getElementById('heroCarousel');
+            const slides = [...carousel.querySelectorAll('[data-slide]')];
+            const indicators = [...carousel.querySelectorAll('[data-indicator]')];
+
+            const nextBtn = document.getElementById('heroNext');
+            const prevBtn = document.getElementById('heroPrev');
+
+            let currentSlide = 0;
+            let autoplay;
+
+            function showSlide(index) {
+                currentSlide = (index + slides.length) % slides.length;
+
+                slides.forEach((slide, i) => {
+                    const active = i === currentSlide;
+
+                    slide.classList.toggle('hidden', !active);
+                    slide.classList.toggle('flex', active);
+                    slide.setAttribute('aria-hidden', String(!active));
+                });
+
+                indicators.forEach((indicator, i) => {
+                    const active = i === currentSlide;
+
+                    indicator.classList.toggle('w-10', active);
+                    indicator.classList.toggle('bg-cyan-400', active);
+
+                    indicator.classList.toggle('w-2.5', !active);
+                    indicator.classList.toggle('bg-white/50', !active);
+
+                    indicator.setAttribute('aria-current', String(active));
+                });
+            }
+
+            function stopAutoplay() {
+                clearInterval(autoplay);
+            }
+
+            function startAutoplay() {
+                stopAutoplay();
+
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    return;
+                }
+
+                autoplay = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 5000);
+            }
+
+            function navigate(index) {
+                showSlide(index);
+                startAutoplay();
+            }
+
+            nextBtn.addEventListener('click', () => {
+                navigate(currentSlide + 1);
+            });
+
+            prevBtn.addEventListener('click', () => {
+                navigate(currentSlide - 1);
+            });
+
+            indicators.forEach((indicator, i) => {
+                indicator.addEventListener('click', () => navigate(i));
+            });
+
+            carousel.addEventListener('mouseenter', stopAutoplay);
+            carousel.addEventListener('mouseleave', startAutoplay);
+
+            carousel.addEventListener('focusin', stopAutoplay);
+            carousel.addEventListener('focusout', event => {
+                if (!carousel.contains(event.relatedTarget)) {
+                    startAutoplay();
+                }
+            });
+
+            carousel.addEventListener('keydown', event => {
+                if (event.key === 'ArrowRight') {
+                    navigate(currentSlide + 1);
+                } else if (event.key === 'ArrowLeft') {
+                    navigate(currentSlide - 1);
+                }
+            });
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    stopAutoplay();
+                } else {
+                    startAutoplay();
+                }
+            });
+
+            showSlide(0);
+            startAutoplay();
+        })();
+    </script>
+</body>
+
+</html>

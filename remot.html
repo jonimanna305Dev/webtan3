@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#090d15">
+    <title>DriveDeck | RC Driving Controller</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-[#090d15] font-sans text-slate-100 antialiased selection:bg-cyan-600/50 flex items-center justify-center p-4">
+
+    <section class="container w-full max-w-screen-xl mx-auto">
+        <!-- Main Card divided into 3 columns -->
+        <div class="w-full rounded-2xl bg-slate-900/70 p-6 border border-slate-800 shadow-2xl grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Column 1: Image with Left & Right Corner Buttons -->
+            <div class="flex flex-col justify-between bg-slate-950/60 rounded-xl p-5 border border-slate-800/60 min-h-[320px]">
+                <!-- Div 1: Buttons (Left and Right corners) -->
+                <div class="flex items-center justify-between w-full">
+                    <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold p-3 rounded-full shadow-lg transition transform hover:scale-105">
+                        <i class='bx bx-left-arrow-alt text-xl'></i>
+                    </button>
+                    <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold p-3 rounded-full shadow-lg transition transform hover:scale-105">
+                        <i class='bx bx-right-arrow-alt text-xl'></i>
+                    </button>
+                </div>
+
+                <!-- Div 2: Image -->
+                <div class="flex items-center justify-center flex-1 my-4">
+                    <img class="h-48 w-48 object-contain rounded-lg drop-shadow-md" src="img/about.png" alt="image description">
+                </div>
+            </div>
+
+            <!-- Column 2: Video & 3 Centered Bottom Buttons -->
+            <div class="flex flex-col justify-between bg-slate-950/60 rounded-xl p-5 border border-slate-800/60 min-h-[320px]">
+                <!-- Top: Video -->
+                <div class="w-full rounded-lg overflow-hidden bg-black border border-slate-800 shadow-inner">
+                    <video class="w-full h-44 object-cover" controls>
+                        <source src="video/sample.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Bottom Center: 3 Control Buttons -->
+                <div class="flex items-center justify-center gap-3 mt-4">
+                    <button class="bg-slate-800 hover:bg-blue-600 text-slate-200 hover:text-white p-3 rounded-full border border-slate-700 shadow transition flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 5c5 0 8 3 8 7s-3 7-8 7V5Z"></path>
+                            <path d="M10 6H3M10 10H2M10 14H2M10 18H3"></path>
+                        </svg>
+                    </button>
+                    <button class="bg-blue-600 hover:bg-blue-500 text-white p-3.5 rounded-full shadow-lg transition flex items-center justify-center">
+                        <i class='bx bx-play text-xl'></i>
+                    </button>
+                    <button class="bg-slate-800 hover:bg-blue-600 text-slate-200 hover:text-white p-3 rounded-full border border-slate-700 shadow transition flex items-center justify-center">
+                        <i class='bx bx-camera text-xl'></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Column 3: Stacked Box (1, 2, 3) & Bottom Controls (4, 5) -->
+            <div class="flex flex-col justify-between bg-slate-950/60 rounded-xl p-5 border border-slate-800/60 min-h-[320px]">
+                <!-- Box 1: 3 Buttons Stacked Vertically -->
+                <div class="bg-slate-900/90 border border-slate-800/80 rounded-xl p-3.5 flex flex-col gap-2.5 shadow-inner">
+                    <button class="w-full bg-blue-600/80 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm">
+                        Gear 1
+                    </button>
+                    <button class="w-full bg-blue-600/80 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm">
+                        Gear 2
+                    </button>
+                    <button class="w-full bg-blue-600/80 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm">
+                        Gear 3
+                    </button>
+                </div>
+
+                <!-- Remaining 2 Buttons (4 & 5) -->
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <button class="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2.5 px-4 rounded-lg shadow transition text-sm text-center">
+                        Mode 4
+                    </button>
+                    <button class="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2.5 px-4 rounded-lg shadow transition text-sm text-center">
+                        Mode 5
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+
+</html>

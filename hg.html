@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#080d16">
+  <title>DriveDeck — RC Remote Controller</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --panel: #0c1421;
+      --line: #253346;
+      --cyan: #22d3ee;
+    }
+
+    body {
+      overscroll-behavior: none
+    }
+
+    button {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid #22d3ee;
+      outline-offset: 3px
+    }
+
+    .deck {
+      background: linear-gradient(145deg, #172337 0%, #0a101b 45%, #0b111d 100%);
+      box-shadow: 0 25px 75px #0009, inset 0 1px #ffffff18, 0 0 0 1px #ffffff0a
+    }
+
+    .surface {
+      background: linear-gradient(155deg, #101b2b, #09111e);
+      border: 1px solid #263448;
+      box-shadow: inset 0 1px #ffffff0c
+    }
+
+    .btn-base {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #354459;
+      background: linear-gradient(160deg, #26354a, #131f30);
+      box-shadow: 0 5px 0 #060c14, 0 8px 17px #0007, inset 0 1px #ffffff20;
+      transition: background .16s, box-shadow .16s, transform .12s, color .16s;
+      cursor: pointer;
+      user-select: none
+    }
+
+    .btn-base:active,
+    .btn-base.is-on {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #060c14, inset 0 1px #ffffff10
+    }
+
+    .btn-base.is-on {
+      border-color: #22d3ee;
+      background: linear-gradient(160deg, #16455b, #103042);
+      color: #67e8f9
+    }
+
+    .indicator.is-on {
+      border-color: #eab308;
+      background: linear-gradient(160deg, #66500b, #302306);
+      color: #fde047
+    }
+
+    .indicator.is-on .lamp,
+    .hazard.is-on .lamp {
+      animation: blink .7s steps(1) infinite;
+      background: #facc15;
+      box-shadow: 0 0 13px #facc15
+    }
+
+    .hazard.is-on {
+      border-color: #fb923c;
+      color: #fdba74
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: .12;
+        box-shadow: none
+      }
+    }
+
+    .wheel-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 11px 10px #000c);
+      transition: transform .12s ease-out;
+      will-change: transform
+    }
+
+    .wheel-drag {
+      touch-action: none;
+      cursor: grab;
+      user-select: none
+    }
+
+    .wheel-drag.dragging {
+      cursor: grabbing
+    }
+
+    .pedal {
+      touch-action: none;
+      user-select: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden
+    }
+
+    .pedal-fill {
+      position: absolute;
+      inset: auto 0 0;
+      height: 0%;
+      transition: height .08s;
+      background: linear-gradient(0deg, #0891b244, #0891b215)
+    }
+
+    .pedal.brake .pedal-fill {
+      background: linear-gradient(0deg, #ef444449, #ef444414)
+    }
+
+    .pedal.active {
+      border-color: #22d3ee
+    }
+
+    .screen-glow {
+      background: radial-gradient(ellipse at 50% 30%, #122b3a, #060b12 72%)
+    }
+
+    .screen video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #020509
+    }
+
+    .deck-scale {
+      transform-origin: top left;
+      will-change: transform
+    }
+
+    #screenHint {
+      pointer-events: none
+    }
+
+    #remoteRoot:fullscreen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #050a11;
+      width: 100vw;
+      height: 100dvh;
+      overflow: hidden
+    }
+
+    #remoteRoot:fullscreen #frame {
+      margin: 0
+    }
+
+    body.fallback-fullscreen {
+      overflow: hidden
+    }
+
+    body.fallback-fullscreen #remoteRoot {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: #050a11;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .hide-scrollbars::-webkit-scrollbar {
+      display: none
+    }
+
+    .tiny-label {
+      font-size: 10px;
+      letter-spacing: .13em;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #8496ad
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .indicator.is-on .lamp,
+      .hazard.is-on .lamp {
+        animation: none
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-dvh bg-[#080d16] text-slate-100 antialiased flex flex-col items-center justify-center p-2 sm:p-5">
+  <div class="w-full max-w-[1230px] mb-3 flex items-center justify-between gap-3" id="outerHeader">
+    <div>
+      <div class="text-sm sm:text-lg font-black tracking-tight"><span class="text-cyan-400"><i
+            class='bx bxs-dashboard'></i> DRIVE</span>DECK <span
+          class="text-[10px] text-slate-500 font-bold ml-2 tracking-[.2em]">RC CONTROLLER</span></div>
+      <p class="text-[11px] text-slate-500">Touch-friendly driving dashboard</p>
+    </div>
+    <span
+      class="text-[11px] rounded-full border border-emerald-900/80 bg-emerald-950/40 text-emerald-400 px-3 py-1.5"><span
+        class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1"></span> Simulation ready</span>
+  </div>
+  <main id="remoteRoot" class="w-full max-w-[1230px]">
+    <div id="frame" class="relative w-full overflow-hidden" style="height:560px">
+      <section id="deck" class="deck deck-scale absolute top-0 left-0 rounded-[30px] border border-slate-700/70 p-5"
+        style="width:1180px;height:560px" aria-label="Remote car controller">
+        <div class="flex items-center justify-between h-[35px] mb-4 px-1">
+          <div class="flex gap-3 items-center"><span
+              class="h-2 w-2 bg-cyan-400 rounded-full shadow-[0_0_12px_#22d3ee]"></span><span
+              class="font-extrabold tracking-[.23em] text-[12px] text-slate-300">DRIVEDECK <span
+                class="text-slate-600">/</span> CONTROL PANEL</span></div>
+          <div class="flex items-center gap-4">
+            <span id="status" role="status" aria-live="polite"
+              class="text-slate-400 text-xs font-medium max-w-[310px] truncate">Ready to drive · Gear P</span>
+            <button id="resetBtn" title="Reset remote" class="text-slate-400 hover:text-white text-lg"
+              aria-label="Reset remote"><i class='bx bx-reset'></i></button>
+            <button id="fullscreenBtn" title="Fullscreen remote" aria-label="Enter fullscreen"
+              class="btn-base h-9 w-9 rounded-lg text-cyan-300"><i id="fullscreenIcon"
+                class='bx bx-fullscreen text-xl'></i></button>
+          </div>
+        </div>
+        <div class="grid h-[460px] gap-4" style="grid-template-columns:350px 475px 1fr">
+          <!-- Left: indicators, wheel and horn -->
+          <div class="surface rounded-2xl px-5 pt-4 pb-3 flex flex-col items-center relative">
+            <div class="flex justify-between w-full items-start">
+              <div class="flex flex-col items-center gap-1"><button id="leftBtn"
+                  class="btn-base indicator h-[54px] w-[66px] rounded-2xl text-3xl relative"
+                  aria-label="Left turn signal" aria-pressed="false"><i class='bx bxs-left-arrow'></i><span
+                    class="lamp absolute top-1.5 w-3 h-0.5 rounded-full bg-slate-600"></span></button><span
+                  class="tiny-label">LEFT</span></div>
+              <span class="tiny-label mt-5 tracking-[.24em] text-slate-600">STEERING</span>
+              <div class="flex flex-col items-center gap-1"><button id="rightBtn"
+                  class="btn-base indicator h-[54px] w-[66px] rounded-2xl text-3xl relative"
+                  aria-label="Right turn signal" aria-pressed="false"><i class='bx bxs-right-arrow'></i><span
+                    class="lamp absolute top-1.5 w-3 h-0.5 rounded-full bg-slate-600"></span></button><span
+                  class="tiny-label">RIGHT</span></div>
+            </div>
+            <div id="wheelZone" class="wheel-drag relative w-[296px] h-[296px] mt-2 shrink-0" role="slider" tabindex="0"
+              aria-label="Steering wheel" aria-valuemin="-180" aria-valuemax="180" aria-valuenow="0">
+              <img id="wheel" class="wheel-img" src="img/steering-wheel.png" alt="Steering wheel" draggable="false">
+              <button id="hornBtn" type="button" aria-label="Horn"
+                class="absolute z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[74px] h-[74px] rounded-full text-transparent focus-visible:text-white"
+                title="Press and hold for horn"><span class="sr-only">Horn</span></button>
+            </div>
+            <div class="mt-auto flex items-center justify-between w-full border-t border-slate-700/50 pt-3"><span
+                class="tiny-label">STEERING ANGLE</span><button id="centerBtn"
+                class="text-[11px] font-bold text-cyan-300 border border-cyan-800/60 rounded-md px-2 py-1 hover:bg-cyan-900/40"
+                title="Center steering">CENTER</button><span id="angleValue"
+                class="text-sm font-extrabold tabular-nums text-white w-12 text-right">0°</span></div>
+          </div>
+          <!-- Center: video, headlights, hazard and camera -->
+          <div class="surface rounded-2xl p-4 flex flex-col min-w-0">
+            <div class="flex items-center justify-between mb-3"><span class="tiny-label"><i
+                  class='bx bx-video mr-1 text-cyan-400'></i> LIVE VIDEO / CAMERA</span><span id="videoBadge"
+                class="text-[10px] font-bold text-slate-400 border border-slate-700 px-2 py-1 rounded-md">NO
+                SIGNAL</span></div>
+            <div
+              class="screen screen-glow h-[325px] border-[5px] border-[#050a11] ring-1 ring-slate-700 rounded-2xl overflow-hidden shadow-inner relative">
+              <video id="video" playsinline controls class="hidden"></video>
+              <div id="screenHint" class="absolute inset-0 flex flex-col items-center justify-center text-center gap-3">
+                <i class='bx bx-camera-movie text-[60px] text-slate-700'></i>
+                <div class="font-semibold text-sm text-slate-300">Camera Display</div>
+                <p class="text-slate-500 text-xs max-w-56 leading-relaxed">Tap the camera button to start a live view,
+                  or choose a video file.</p>
+              </div>
+              <div
+                class="absolute left-3 top-3 text-[10px] font-bold px-2 py-1 rounded bg-black/60 text-cyan-400 hidden"
+                id="liveLabel">● LIVE</div>
+            </div>
+            <div class="flex items-center justify-between mt-auto gap-3">
+              <button id="headlightBtn" class="btn-base h-[65px] w-[85px] rounded-xl flex-col gap-0.5"
+                aria-label="Headlights" aria-pressed="false" title="Headlights"><i class='bx bx-sun text-2xl'></i><span
+                  class="text-[9px] tracking-wider font-bold">LIGHTS</span></button>
+              <button id="hazardBtn" class="btn-base hazard h-[65px] w-[85px] rounded-xl flex-col gap-0.5 relative"
+                aria-label="Hazard lights" aria-pressed="false" title="Hazard lights"><i
+                  class='bx bx-error text-2xl'></i><span
+                  class="lamp absolute top-1 w-2 h-0.5 rounded-full bg-slate-600"></span><span
+                  class="text-[9px] tracking-wider font-bold">HAZARD</span></button>
+              <button id="cameraBtn" class="btn-base h-[65px] w-[85px] rounded-xl flex-col gap-0.5"
+                aria-label="Toggle camera" aria-pressed="false" title="Start/stop camera"><i
+                  class='bx bx-camera text-2xl'></i><span
+                  class="text-[9px] tracking-wider font-bold">CAMERA</span></button>
+              <label title="Upload video"
+                class="btn-base h-[65px] w-[85px] rounded-xl flex flex-col gap-0.5 cursor-pointer"><i
+                  class='bx bx-upload text-2xl'></i><span class="text-[9px] tracking-wider font-bold">VIDEO</span><input
+                  id="fileInput" class="sr-only" type="file" accept="video/*"></label>
+            </div>
+          </div>
+          <!-- Right: vertical DPR gears and pedals -->
+          <div class="surface rounded-2xl p-4 flex flex-col min-w-0">
+            <div class="flex items-center justify-between mb-3"><span class="tiny-label">DRIVE CONTROLS</span><span
+                class="text-[10px] font-bold rounded-md bg-slate-800 text-cyan-300 px-2 py-1" id="gearBadge">P</span>
+            </div>
+            <div class="flex gap-3 h-full min-h-0">
+              <div class="flex flex-col w-[76px] shrink-0 gap-3"><span class="tiny-label text-center">GEAR</span>
+                <div class="flex flex-col gap-3 flex-1" id="gearGroup">
+                  <button data-gear="D" class="btn-base gear rounded-xl flex-1 text-2xl font-black"
+                    aria-pressed="false">D</button>
+                  <button data-gear="P" class="btn-base gear is-on rounded-xl flex-1 text-2xl font-black"
+                    aria-pressed="true">P</button>
+                  <button data-gear="R" class="btn-base gear rounded-xl flex-1 text-2xl font-black"
+                    aria-pressed="false">R</button>
+                </div>
+              </div>
+              <div class="flex flex-1 gap-3 min-w-0">
+                <div class="flex flex-1 min-w-0 flex-col gap-3"><span class="tiny-label text-center">BRAKE</span><button
+                    id="brakeBtn" class="btn-base pedal brake rounded-xl flex-1 flex-col gap-3"
+                    aria-label="Brake pedal">
+                    <div class="pedal-fill"></div><i
+                      class='bx bx-stop-circle text-3xl relative z-10 text-red-400'></i><span
+                      class="relative z-10 font-black text-[13px] tracking-[.1em]">BRAKE</span><span id="brakeValue"
+                      class="relative z-10 text-lg font-black tabular-nums">0%</span>
+                    <div class="relative z-10 w-10 h-[3px] bg-slate-600 rounded-full"></div>
+                  </button></div>
+                <div class="flex flex-1 min-w-0 flex-col gap-3"><span
+                    class="tiny-label text-center">THROTTLE</span><button id="gasBtn"
+                    class="btn-base pedal rounded-xl flex-1 flex-col gap-3" aria-label="Gas accelerator">
+                    <div class="pedal-fill"></div><i
+                      class='bx bx-tachometer text-3xl relative z-10 text-emerald-400'></i><span
+                      class="relative z-10 font-black text-[13px] tracking-[.1em]">GAS</span><span id="gasValue"
+                      class="relative z-10 text-lg font-black tabular-nums">0%</span>
+                    <div class="relative z-10 w-10 h-[3px] bg-slate-600 rounded-full"></div>
+                  </button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 text-center text-[10px] text-slate-500 tracking-wider">RC CAR CONTROL INTERFACE <span
+            class="mx-2">•</span> SIMULATION MODE <span class="mx-2">•</span> DRAG WHEEL / HOLD PEDALS</div>
+      </section>
+    </div>
+  </main>
+  <div id="footerNote"
+    class="max-w-[1230px] w-full flex items-center justify-between flex-wrap gap-2 mt-3 text-[11px] text-slate-500">
+    <span><i class='bx bx-info-circle'></i> Open in landscape for the best mobile experience.</span><span>Keyboard: ← →
+      steer · ↑ accelerate · ↓ brake · H horn</span></div>
+  <script>
+    (() => {
+      'use strict';
+      const $ = id => document.getElementById(id);
+      const root = $('remoteRoot'), frame = $('frame'), deck = $('deck');
+      const W = 1180, H = 560;
+      let fallbackFullscreen = false, angle = 0, gear = 'P', left = false, right = false, hazard = false, headlights = false, cameraStream = null, videoUrl = null;
+      let activeSteerPointer = null, pedalPointers = { brake: null, gas: null };
+      function isFull() { return !!document.fullscreenElement || fallbackFullscreen }
+      function fit() {
+        const fullscreen = isFull();
+        const availableWidth = fullscreen ? window.innerWidth : root.clientWidth;
+        const availableHeight = fullscreen ? window.innerHeight : Infinity;
+        const scale = Math.max(.1, Math.min(1, availableWidth / W, availableHeight / H));
+        deck.style.transform = `scale(${scale})`;
+        frame.style.width = `${W * scale}px`; frame.style.height = `${H * scale}px`;
+        frame.style.margin = '0 auto';
+      }
+      new ResizeObserver(fit).observe(root); window.addEventListener('resize', fit); window.addEventListener('orientationchange', () => setTimeout(fit, 250)); fit();
+      function notice(msg) { $('status').textContent = msg }
+      function toggleButton(btn, on) { btn.classList.toggle('is-on', on); btn.setAttribute('aria-pressed', String(on)) }
+      function updateIndicators() { toggleButton($('leftBtn'), left || hazard); toggleButton($('rightBtn'), right || hazard); toggleButton($('hazardBtn'), hazard) }
+      $('leftBtn').addEventListener('click', () => { if (hazard) hazard = false; left = !left; right = false; updateIndicators(); notice(left ? 'Left indicator on' : 'Left indicator off') });
+      $('rightBtn').addEventListener('click', () => { if (hazard) hazard = false; right = !right; left = false; updateIndicators(); notice(right ? 'Right indicator on' : 'Right indicator off') });
+      $('hazardBtn').addEventListener('click', () => { hazard = !hazard; if (hazard) { left = false; right = false } updateIndicators(); notice(hazard ? 'Hazard lights on' : 'Hazard lights off') });
+      $('headlightBtn').addEventListener('click', () => { headlights = !headlights; toggleButton($('headlightBtn'), headlights); notice(headlights ? 'Headlights on' : 'Headlights off') });
+      function setGear(value) { gear = value; document.querySelectorAll('[data-gear]').forEach(btn => toggleButton(btn, btn.dataset.gear === gear)); $('gearBadge').textContent = gear; notice(`Gear ${gear} selected`) }
+      document.querySelectorAll('[data-gear]').forEach(btn => btn.addEventListener('click', () => setGear(btn.dataset.gear)));
+      function setSteering(value) { angle = Math.round(Math.max(-180, Math.min(180, value))); $('wheel').style.transform = `rotate(${angle}deg)`; $('angleValue').textContent = `${angle}°`; $('wheelZone').setAttribute('aria-valuenow', String(angle)) }
+      const wheelZone = $('wheelZone');
+      function wheelAngle(e) { const rect = wheelZone.getBoundingClientRect(), cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2; return Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI }
+      let startAngle = 0, startSteering = 0;
+      wheelZone.addEventListener('pointerdown', e => { if (e.target.closest('#hornBtn')) return; activeSteerPointer = e.pointerId; startAngle = wheelAngle(e); startSteering = angle; wheelZone.setPointerCapture(e.pointerId); wheelZone.classList.add('dragging') });
+      wheelZone.addEventListener('pointermove', e => { if (e.pointerId !== activeSteerPointer) return; let delta = wheelAngle(e) - startAngle; if (delta > 180) delta -= 360; if (delta < -180) delta += 360; setSteering(startSteering + delta) });
+      function endSteer(e) { if (e.pointerId !== activeSteerPointer) return; activeSteerPointer = null; wheelZone.classList.remove('dragging'); notice(`Steering ${angle}°`) }
+      wheelZone.addEventListener('pointerup', endSteer); wheelZone.addEventListener('pointercancel', endSteer);
+      wheelZone.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); setSteering(angle + (e.key === 'ArrowLeft' ? -10 : 10)) } });
+      $('centerBtn').addEventListener('click', () => { setSteering(0); notice('Steering centered') });
+      const horn = $('hornBtn');
+      function hornDown(e) { e.stopPropagation(); horn.style.background = '#22d3ee35'; notice('Horn pressed') }
+      function hornUp(e) { e?.stopPropagation(); horn.style.background = 'transparent'; notice('Horn released') }
+      horn.addEventListener('pointerdown', e => { horn.setPointerCapture(e.pointerId); hornDown(e) }); horn.addEventListener('pointerup', hornUp); horn.addEventListener('pointercancel', hornUp);
+      function setPedal(kind, value) { value = Math.max(0, Math.min(100, Math.round(value))); const el = $(kind + 'Btn'); el.querySelector('.pedal-fill').style.height = value + '%'; $(kind + 'Value').textContent = value + '%'; el.classList.toggle('active', value > 0) }
+      ['brake', 'gas'].forEach(kind => {
+        const el = $(kind + 'Btn'); function pressure(e) { const rect = el.getBoundingClientRect(); setPedal(kind, (1 - (e.clientY - rect.top) / rect.height) * 100) }
+        el.addEventListener('pointerdown', e => { pedalPointers[kind] = e.pointerId; el.setPointerCapture(e.pointerId); pressure(e); notice(`${kind === 'gas' ? 'Accelerator' : 'Brake'} pressed`) });
+        el.addEventListener('pointermove', e => { if (pedalPointers[kind] === e.pointerId) pressure(e) });
+        const end = e => { if (pedalPointers[kind] !== e.pointerId) return; pedalPointers[kind] = null; setPedal(kind, 0) };
+        el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end); el.addEventListener('lostpointercapture', end);
+      });
+      function stopCamera() { if (cameraStream) { cameraStream.getTracks().forEach(track => track.stop()); cameraStream = null } toggleButton($('cameraBtn'), false); $('liveLabel').classList.add('hidden') }
+      function showVideo(source) { $('video').classList.remove('hidden'); $('screenHint').classList.add('hidden'); $('videoBadge').textContent = source }
+      function clearVideo() { const v = $('video'); v.pause(); v.srcObject = null; v.removeAttribute('src'); v.load(); v.classList.add('hidden'); $('screenHint').classList.remove('hidden'); $('videoBadge').textContent = 'NO SIGNAL'; $('liveLabel').classList.add('hidden') }
+      $('cameraBtn').addEventListener('click', async () => {
+        if (cameraStream) { stopCamera(); clearVideo(); notice('Camera off'); return }
+        if (!navigator.mediaDevices?.getUserMedia) { notice('Camera requires HTTPS or localhost'); return }
+        try { const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false }); stopCamera(); const v = $('video'); v.pause(); if (videoUrl) { URL.revokeObjectURL(videoUrl); videoUrl = null } v.removeAttribute('src'); v.srcObject = stream; cameraStream = stream; v.controls = false; v.muted = true; v.playsInline = true; showVideo('CAMERA ON'); $('liveLabel').classList.remove('hidden'); toggleButton($('cameraBtn'), true); await v.play(); notice('Live camera started') }
+        catch (err) { stopCamera(); notice('Camera unavailable or permission denied') }
+      });
+      $('fileInput').addEventListener('change', e => { const file = e.target.files?.[0]; if (!file) return; stopCamera(); if (videoUrl) URL.revokeObjectURL(videoUrl); videoUrl = URL.createObjectURL(file); const v = $('video'); v.pause(); v.srcObject = null; v.src = videoUrl; v.controls = true; v.muted = false; showVideo('VIDEO FILE'); v.play().catch(() => { }); notice(`Playing: ${file.name}`) });
+      async function toggleFullscreen() { if (isFull()) { if (document.fullscreenElement) { await document.exitFullscreen().catch(() => { }) } fallbackFullscreen = false; document.body.classList.remove('fallback-fullscreen') } else { if (root.requestFullscreen) { try { await root.requestFullscreen() } catch { fallbackFullscreen = true; document.body.classList.add('fallback-fullscreen') } } else { fallbackFullscreen = true; document.body.classList.add('fallback-fullscreen') } } syncFullscreen() }
+      function syncFullscreen() { const on = isFull(); $('fullscreenIcon').className = `bx ${on ? 'bx-exit-fullscreen' : 'bx-fullscreen'} text-xl`; $('fullscreenBtn').setAttribute('aria-label', on ? 'Exit fullscreen' : 'Enter fullscreen'); $('outerHeader').classList.toggle('hidden', on); $('footerNote').classList.toggle('hidden', on); fit() }
+      $('fullscreenBtn').addEventListener('click', toggleFullscreen); document.addEventListener('fullscreenchange', syncFullscreen);
+      $('resetBtn').addEventListener('click', () => { setSteering(0); setGear('P'); left = right = hazard = headlights = false; updateIndicators(); toggleButton($('headlightBtn'), false); setPedal('brake', 0); setPedal('gas', 0); stopCamera(); clearVideo(); notice('Remote reset · Gear P') });
+      const pressedKeys = new Set(); document.addEventListener('keydown', e => { if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return; if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' '].includes(e.key)) e.preventDefault(); pressedKeys.add(e.key); if (e.key === 'ArrowLeft') setSteering(angle - 5); if (e.key === 'ArrowRight') setSteering(angle + 5); if (e.key === 'ArrowUp') setPedal('gas', 100); if (e.key === 'ArrowDown') setPedal('brake', 100); if (e.key.toLowerCase() === 'h') hornDown(e); if (e.key === 'Escape' && fallbackFullscreen) { fallbackFullscreen = false; document.body.classList.remove('fallback-fullscreen'); syncFullscreen() } });
+      document.addEventListener('keyup', e => { pressedKeys.delete(e.key); if (e.key === 'ArrowUp') setPedal('gas', 0); if (e.key === 'ArrowDown') setPedal('brake', 0); if (e.key.toLowerCase() === 'h') hornUp(e) });
+      window.addEventListener('blur', () => { setPedal('brake', 0); setPedal('gas', 0); hornUp() }); window.addEventListener('beforeunload', () => { stopCamera(); if (videoUrl) URL.revokeObjectURL(videoUrl) });
+    })();
+  </script>
+</body>
+
+</html>
